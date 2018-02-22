@@ -1,0 +1,23 @@
+tourorigin,tourdestination,speed
+Basel,Kornwestheim,62.75573621195365
+Berlin,Eindhoven Airport,52.58460301846868
+Berlin,Kornwestheim,61.11799456788643
+Berlin,Praha,50.647582837318176
+Eindhoven Airport,Berlin,45.005238585108536
+Homburg,Luxembourg Airport,46.02001170919792
+Homburg,Praha,48.489932777472546
+Ingolstadt,Kornwestheim,48.37738362660914
+Ingolstadt,Luxembourg Airport,52.02277162001365
+Ingolstadt,Praha,48.51221285064983
+Kornwestheim,Basel,42.07905106923884
+Kornwestheim,Ingolstadt,58.05980514844425
+Kornwestheim,Madrid,54.38026440111574
+Kornwestheim,Porto,59.23764314880795
+Luxembourg Airport,Homburg,36.16973865563441
+Luxembourg Airport,Ingolstadt,50.22898781092415
+Madrid,Kornwestheim,57.47182264870082
+Porto,Kornwestheim,53.366263132152156
+Praha,Berlin,42.439224429464545
+Praha,Homburg,51.66031361230996
+Praha,Ingolstadt,50.73880977293925
+Zagreb,Kornwestheim,51.326405353843505
