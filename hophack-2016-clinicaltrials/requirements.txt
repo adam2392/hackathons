@@ -55,7 +55,7 @@ nibabel==2.3.0
 numpy==1.15.1
 olefile==0.46
 pandas==0.23.4
-paramiko==2.4.1
+paramiko>=2.4.2
 Pillow==5.2.0
 prettytable==0.7.2
 protobuf==3.6.0
