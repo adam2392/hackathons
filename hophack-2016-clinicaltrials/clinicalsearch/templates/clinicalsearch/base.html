@@ -1,0 +1,89 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Finding Clinical Trials For You</title>
+		<!-- Meta Data Section -->
+		<meta charset="utf-8">
+		<meta name="author" content="Adam Li, Richard Chen, Daniel Chen">
+		<meta name="description" content="HopHacks Spring 2016">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"> 
+	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+		<!-- My stylesheets -->
+		<link href="{% static "components/css/style.css" %}" rel="stylesheet">
+    
+	    <!-- Bootstrap -->
+	    <link href="{% static "components/bower_components/bootstrap/dist/css/bootstrap.min.css" %}" rel="stylesheet">
+	    <link href="{% static "components/css/bootstrap-theme.css" %}" rel="stylesheet">
+
+		<!-- Jquery -->
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+		<script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+		<link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
+	</head>
+	<body>
+		<!-- Responsive Nav Bar -->
+		<nav class="navbar navbar-default navbar-fixed-top navbar-inverse" role="navigation">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#nav-collapse">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="{% url 'index' %}">CSI</a>
+				</div>
+
+				<div class="collapse navbar-collapse" id="nav-collapse">
+
+					<ul class="nav navbar-nav">
+						<li class="">
+							<a href="{% url 'problem' %}">Problem Statement</a>
+						</li>
+						<li class="">
+							<a href="{% url 'about' %}">About Team</a>
+						</li>
+						<li class="">
+							<a href="{% url 'map' %}">Map of Trials In the USA</a>
+						</li>
+						<li class="">
+							<a href="{% url 'contact' %}">Contact Form</a>
+						</li>
+					</ul>
+				</div> <!-- /. navbar-collapse-->
+			</div> <!-- ./container-fluid -->
+		</nav>
+
+		<!-- Javascript to bring in JSON data for D3 -->
+		<script>
+			//store the data in a js var
+			// var data = {{ data|safe }};
+		</script>
+
+		{% block maincontent %}
+		{% endblock %}
+
+		<!-- Footer -->
+		<div id="footer">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-6 col-lg-offset-3">
+						<p class="copyright">Copyright &copy; 2016 - Created in HopHacks Spring 2016 by Daniel Chen, Richard Chen, and Adam Li</p>
+					</div>
+				</div>    
+			</div>  
+		</div>
+
+	    <!-- Javascript Libs -->
+		<script type="text/javascript" src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.3/handlebars.min.js"></script>
+
+		<script src="{% static "components/bower_components/jquery/dist/jquery.min.js" %}"></script>
+    	<script src="{% static "components/bower_components/bootstrap/dist/js/bootstrap.min.js" %}"></script>
+	</body>
+</html>

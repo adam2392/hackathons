@@ -1,0 +1,147 @@
+{% extends 'clinicalsearch/base.html' %}
+
+{% load staticfiles %}
+
+{% block maincontent %}
+<!-- <link href="{% static 'css/style.css' %}" rel="stylesheet">
+ -->
+<div id="header" style="width: 100%;">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
+        <h1>Clinical Search Index</h1>
+      </div>
+      <p style="color: white; font-weight: bold; text-align: center;">
+        Use the following search parameters to find a relevant clinical trial happening in the USA. Not all parameters need to be filled out! The original data is pulled from clinicaltrials.gov and their API, but most data points were scraped after API calls gave us some basic data.
+        <br><br>
+        A limitation is you need to enter the exact sponsor's name if you want to search by sponsor. 
+        <br><br>
+        States need to be entered by their abbreviation. 
+        <br><br>
+        Example search: "cancer", "25" 
+      </p>
+    </div>
+    <br><br><br>
+    <form action="api/search/" method="post">
+      {% csrf_token %}
+      <center>
+        {{ form.as_p }}
+        <input type="submit" value="Submit" />
+      </center>
+  </form>
+
+    <br><br><br><br><br><br><br><br>
+  </div>
+
+</div>
+
+<script> 
+  // prevent the page from refreshing
+  $('.search').on('click', function(e) {
+    e.preventDefault();
+  })
+
+  function queryDisease() {
+    disease_text = document.getElementById('exampleInputDisease').value;
+      //ajax call to get clinical info
+      $.ajax({
+        type:'get',
+        url: 'api/getdiseasedata/',
+        data: {disease: disease_text},
+        success: function(data) {
+          console.log(data)
+          $("#trials-complete").modal('show');
+          $("#trials-incomplete").modal('show');
+        },
+        error:function(jqXHR, textStatus, errorThrown) {
+          console.log(textStatus)
+        }
+      });
+  };
+
+  function queryState() {
+    state_text = document.getElementById('exampleInputState').value;
+    
+    //ajax call to get clinical info
+    $.ajax({
+      type:'get',
+      url: 'api/getstatedata/',
+      data: {state: state_text},
+      success: function(data) {
+        console.log(data)
+      },
+      error:function(jqXHR, textStatus, errorThrown) {
+        console.log(textStatus)
+      }
+    });
+  };
+
+  function queryGender() {
+    gender_text = document.getElementById('exampleInputGender').value;
+    console.log(gender_text)
+    //ajax call to get clinical info
+    $.ajax({
+      type:'get',
+      url: 'api/getgenderdata/',
+      data: {genders: gender_text},
+      success: function(data) {
+        console.log(data)
+      },
+      error:function(jqXHR, textStatus, errorThrown) {
+        console.log(textStatus)
+      }
+    });
+  };
+
+  function queryMinAge() {
+    minage_text = document.getElementById('exampleInputMinAge').value;
+    
+    //ajax call to get clinical info
+    $.ajax({
+      type:'get',
+      url: 'api/getminagedata/',
+      data: {min_age: minage_text},
+      success: function(data) {
+        console.log(data)
+      },
+      error:function(jqXHR, textStatus, errorThrown) {
+        console.log(textStatus)
+      }
+    });
+  };
+
+  function queryMaxAge() {
+    maxage_text = document.getElementById('exampleInputMinAge').value;
+    
+    //ajax call to get clinical info
+    $.ajax({
+      type:'get',
+      url: 'api/getmaxagedata/',
+      data: {max_age: minage_text},
+      success: function(data) {
+        console.log(data)
+      },
+      error:function(jqXHR, textStatus, errorThrown) {
+        console.log(textStatus)
+      }
+    });
+  };
+
+  function queryHealth() {
+    health_text = document.getElementById('exampleInputHealth').value;
+    
+    //ajax call to get clinical info
+    $.ajax({
+      type:'get',
+      url: 'api/gethealthdata/',
+      data: {health: minage_text},
+      success: function(data) {
+        console.log(data)
+      },
+      error:function(jqXHR, textStatus, errorThrown) {
+        console.log(textStatus)
+      }
+    });
+  };
+</script>
+{% endblock %}

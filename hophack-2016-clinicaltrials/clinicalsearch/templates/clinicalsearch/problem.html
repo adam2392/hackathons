@@ -1,0 +1,95 @@
+{% extends 'clinicalsearch/base.html' %}
+
+{% load staticfiles %}
+
+{% block maincontent %}
+
+<link rel="stylesheet" href="{% static 'css/grayscale.css' %}">
+<br><br><br>
+<!-- Intro Header -->
+<header class="intro">
+    <div class="intro-body">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <h1 class="brand-heading">Clinical Search Index</h1>
+                    <p class="intro-text">Clinical Trials Made Simplified</p>
+                    <a href="#about" class="btn btn-circle page-scroll">
+                        <i class="fa fa-angle-double-down animated"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- About Section -->
+<section id="about" class=" content-section text-center">
+    <hr>
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2">
+            <h2>The Problem with Clinical Trials</h2>
+            <h4>1. Why Clinical Trials Are Important<h4>
+
+            <p> The medications developed from clinical trials are the therapies that have the potential to drive new treatments and potential cures over the next 5 to 10 years - from addressing the substantial unmet medical needs of diseases such as Diabetes and Autism, to rare diseases with no treatments such as ALS. The success of clinical trials are important to not only big stakeholders like pharmaceutical companies, researchers, physicians, but also to ordinary people like taxpayers and special interests. <a href="http://www.phrma.org/sites/default/files/pdf/biopharmaceutical-industry-sponsored-clinical-trials-impact-on-state-economies.pdf">Approximately $10 billion</a> is spent funding clinical trials every year, yet there lacks a functional query tool that makes the results and successes of these expenditures transparent. </p>
+
+            <h4> 2. Finding the right clinical trial is frustrating. <h4>
+            <p> Even with very specific tools such as <a href="http://clinicaltrials.gov">clinicaltrials.gov</a>, finding the right clinical trial can be extremely frustrating. Failures in clinical trials are hardly ever reported, with only 10% of studies ever published. Even amonst the top 10 ranking sponsors, these sponsors publish a disproportionate amount of clinical trial compared to their overall completed trials.
+        </div>
+    </div>
+</section>
+
+<!-- Significance Section -->
+<section id="significance" class="content-section text-center">
+    <hr>
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2">
+            <h2>The Significance</h2>
+            <h4> Finding the right clinical trial will be empowering. <h4>
+            <p>
+            The success of clinical trials are important to not only big stakeholders like pharmaceutical companies, researchers, physicians, but also to ordinary people like taxpayers and special interests. <a href="http://www.phrma.org/sites/default/files/pdf/biopharmaceutical-industry-sponsored-clinical-trials-impact-on-state-economies.pdf">Approximately $36.5 billion</a> is spent funding clinical trials every year, yet there lacks a functional query tool that makes the results and successes of these expenditures transparent. 
+
+            <br><br>
+            The following graph shows the number of published studies and the number of completed clinical trials for top sponsors. You'll notice the discrepency in the amount of publications resulting from clinical trials. This can be due to lack of information on clinicaltrials.gov, or lack of results; both of these reflect poorly on the output performance of such sponsors. Patients would most likely want to enroll in clinical trials with efficient and productive sponsors.
+            </p>
+            <div style="width: 100%; height: 450px; background-color: white;">
+                <iframe style="width: 100%; height: 90%;" src="{% url 'graph1' %}" frameborder="0"></iframe>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Solution Section -->
+<section id="significance" class="content-section text-center">
+    <hr>
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2">
+            <h2>The CSI Solution</h2>
+            <h4>"Fighting Crime In Medicine"<h4>
+            <p>
+            Empowering patients:
+            <br>
+            1. to search for ongoing clinical trials
+            <br>
+            2. to search for completed clinical trials and see results
+            <br>
+            3. visualize data in different ways
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Download Section -->
+<section id="download" class="content-section text-center">
+    <hr>
+    <div class="download-section">
+        <!-- <div class="container"> -->
+            <div class="col-lg-8 col-lg-offset-2">
+                <h2>Download Clinical Search Indexx</h2>
+                <p>You can download the Clinical Search Index App for free on Github.</p>
+                <a href="https://github.com/adam2392/clinicaltrials" class="btn btn-default btn-lg">Visit Download Page</a>
+            </div>
+        <!-- </div> -->
+    </div>
+</section>
+{% endblock %}

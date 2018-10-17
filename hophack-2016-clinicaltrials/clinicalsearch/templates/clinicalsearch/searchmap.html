@@ -1,0 +1,185 @@
+{% extends "clinicalsearch/base.html" %}
+{% block maincontent %}
+{% load staticfiles %}
+{% load table_tags %}
+
+<!-- D3 -->
+<script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<script src="//d3js.org/topojson.v1.min.js"></script>
+<script src="{% static 'node_modules/datamaps/dist/datamaps.all.min.js' %}"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js"></script>
+
+	<br><br><br>
+	<div id="descript" style="position: relative; text-align: center;">
+		This map shows you a heat map distributions of active clinical trials over the USA. This is based on your querying from the previous page. This is helpful to visualize the activity of clinical trials within the USA. It will also help you determine which state has the most amount of trials relevant to your disease!
+	</div>
+	<br>
+
+	<!-- Where the map goes -->
+	<div id="map" style="position: relative;"></div>
+	
+	<!-- Pop up modal window -->
+	<div class="modal" id="trials" role="dialog">
+	    <div class="modal-dialog">
+
+	      	<div class="modal-content">
+		        <div class="modal-header" >
+		          <button type="button" class="close" data-dismiss="modal">&times;</button>
+		          <center><h4>Clinical Trials</h4></center>
+		        </div>
+		        <div class="modal-body" style="padding:100px 50px;">
+		        	<div class="col-md-6">
+		        		<a href="" id="complete_link">
+					    	<center><h4>Completed:</h4></center>
+					    	<center><h4 id="complete_count"></h4></center>
+					    </a>
+				  	</div>
+				 	<div class="col-md]-6">
+				 		<a href="" id="ongoing_link">
+					    	<center><h4>Ongoing:</h4></center>
+					    	<center><h4 id="ongoing_count"></h4></center>
+				    	</a>
+				 	</div>
+		        </div>
+	      	</div>
+	      
+	    </div>
+	</div>
+	<script>
+		$(function() {
+		    var json_colors = {}
+			states = Object.keys(initialdatum)
+
+			//loop through each state
+			for(var i=0; i<Object.keys(initialdatum).length; i++) {
+				var state = states[i]
+				
+				numTrial = initialdatum[state]['numTrials'] // store number of trials
+				
+				json_colors[state] = colorScale(numTrial) // get color based on scale
+			}
+			for(var j=0; j<Object.keys(initialdatum).length; j++) {	
+				var colorObj = {} //create color object to update choropleth
+				var state = states[j] //get the state
+				
+				colorObj[state] = json_colors[state] //make json object
+
+				map.updateChoropleth(colorObj) //update color
+			}
+		});
+
+		var initialdatum = {{ datum|safe }}
+		var params= {{ params|safe }}
+		console.log(params);
+		var genders = params["genders"];
+		var sponsor = params["sponsor"];
+		var health = params["health"];
+		var condition = params["disease"];
+		var age = params["age"];
+		var query_params = ""
+		if (genders != undefined)
+			query_params += "genders=" + genders
+		if (sponsor != undefined)
+			query_params += "&sponsor=" + sponsor
+		if (health != undefined)
+			query_params += "&health=" + health
+		if (condition != undefined)
+			query_params += "&condition=" + condition
+		if (age != undefined)
+			query_params += "&age=" + age
+
+		// create a colorscale
+		var colorScale = d3.scale.linear()
+			.domain([0, 10])
+			.range(['green', 'red']);
+
+	 	//create a datamap with d3.js and datamaps.js
+		var map = new Datamap({
+			element: document.getElementById('map'),	//get html element
+			scope: 'usa',								//only map of usa
+			responsive: true,							//make responsive
+			data: initialdatum,
+			geographyConfig: {
+				popupTemplate: function(geography, data) { return '<div class="hoverinfo">' + geography.properties.name + '<br>' + ' Number of Trials:' +  data.numTrials + ' '
+				}
+    		},
+    		done: function(geography, data, map) {
+
+    		}
+		});//end of map
+		
+		svg = d3.select('svg')
+
+		var legend = svg.selectAll('g.legendEntry')
+		    .data(colorScale.range())
+		    .enter()
+		    .append('g').attr('class', 'legendEntry');
+
+		legend
+		    .append('rect')
+		    .attr("x", 500)
+		    .attr("y", function(d, i) {
+		       return i * 20;
+		    })
+		   .attr("width", 10)
+		   .attr("height", 10)
+		   .style("stroke", "black")
+		   .style("stroke-width", 1)
+		   .style("fill", function(d){return d;}); 
+
+		 legend
+		 	.data(colorScale.domain())
+		    .append('text')
+		    .attr("x", 530) //leave 5 pixel space after the <rect>
+		    .attr("y", function(d, i) {
+		       return i * 20;
+		    })
+		    .attr("dy", "0.8em") //place text one line *below* the x,y point
+		    .text(function(d,i) {
+		        return colorScale.domain()[i];
+		    });
+		
+		map.svg.selectAll('.datamaps-subunit').on('click', function(geography) {
+			var m = {};
+			console.log(geography.id)
+			console.log(typeof(geography.id))
+
+			m[geography.id] = 'green'; //geography.id is like TX
+			console.log(m)
+			console.log(typeof(m))
+			map.updateChoropleth(m);
+
+			
+			//ajax call to get clinical info based on state click
+			$.ajax({
+				type:'get',
+				url: '/api/statemap/',
+				data: {state: geography.id, genders: genders, sponsor: sponsor, health: health, condition: condition, age: age},
+				dataType: "json",
+				success: function(data) {
+					console.log(data)
+					console.log(query_params)
+					$("#trials").find('#complete_link').attr("href", "/api/completetable?state="+geography.id + "&" + query_params)
+					$("#trials").find('#ongoing_link').attr("href", "/api/ongoingtable?state="+geography.id + "&" + query_params)
+					$('#trials').find('#complete_count').html(data["closed"]);
+					$('#trials').find('#ongoing_count').html(data["ongoing"]);
+					$("#trials").modal('show');
+				},
+				error:function(jqXHR, textStatus, errorThrown) {
+					console.log(textStatus)
+			    }
+			});
+
+			$("dialog-form").dialog('open');
+		});
+
+		map.labels();	// add labels to each map element (e.g. CA to California)
+
+		//resize with d3
+		d3.select(window).on('resize', function() {
+			map.resize();
+		});
+	</script>
+	<!-- Load in the map javascript file -->
+{% endblock %}

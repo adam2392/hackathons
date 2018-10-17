@@ -1,0 +1,11 @@
+Contact Name:
+{{ contact_name }}
+
+Phone:
+{{ contact_phone}}
+
+Email:
+{{ contact_email }}
+
+Content:
+{{ disease_content|safe|striptags }}
