@@ -15,7 +15,7 @@ chardet==3.0.4
 conda==4.5.11
 ConfigArgParse==0.13.0
 configobj==5.0.6
-cryptography==2.3.1
+cryptography==3.2
 cryptography-vectors==2.3.1
 cycler==0.10.0
 datrie==0.7.1
