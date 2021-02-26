@@ -1,5 +1,5 @@
 aioeasywebdav==2.2.0
-aiohttp==3.4.3
+aiohttp==3.7.4
 appdirs==1.4.3
 apptools==4.4.0
 asn1crypto==0.24.0
